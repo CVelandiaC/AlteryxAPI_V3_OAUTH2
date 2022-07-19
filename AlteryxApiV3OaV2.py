@@ -27,11 +27,21 @@ class ayx_api_v3:
     def GET_endpoint(self, endpoint, parameters):
 
         requestUrl = self.__host + endpoint 
-        headers = {'Authorization' : 'Bearer ' + self.__token}
+        headers = {
+            'Authorization' : 'Bearer ' + self.__token,
+            'Accept' : 'application/json'
+        }
 
         response = requests.request('GET', url = requestUrl, headers = headers, params = parameters)
 
-        response = json.loads(response.text)
+        if "[404]" in str(response):
+            response = "404: Unauthorized"
+        elif "[400]" in str(response):
+            response = "400: BadRequest"
+        elif "[500]" in str(response):
+            response = "500: ERROR"
+        else:
+            response = json.loads(response.text)
 
         return response
 
