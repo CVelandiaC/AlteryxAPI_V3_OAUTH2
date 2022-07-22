@@ -55,3 +55,14 @@ class ayx_api_v3:
         response = json.loads(response.text)
 
         return response
+
+    def DELETE_endpoint(self, endpoint, parameters):
+
+        requestUrl = self.__host + endpoint 
+        headers = {'Authorization' : 'Bearer ' + self.__token}
+
+        response = requests.request('DELETE', url = requestUrl, headers = headers, params = parameters)
+
+        response = json.loads(response.text)
+
+        return response
